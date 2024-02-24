@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+
+  <link rel="stylesheet" href="./src/styles/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+
+  <div id="root">
+    <div id="app-background">
+
+      <div class="primary-container">
+        <div id="weather-widget-wrapper">
+          <div id="weather-widget">
+            <div class="temp">
+              <p></p>
+            </div>
+            <div class="meta">
+              <div class="location">
+                <p></p>
+              </div>
+              <div class="date">
+                <p></p>
+              </div>
+            </div>
+            <div class="icon">
+              <i></i>
+            </div>
+          </div>
+
+          <span id="get-weather-by-location-feature">Get weather by location</span>
+        </div>
+      </div>
+      <div class="secondary-container"></div>
+
+    </div>
+  </div>
+
+  <script src="./src/index.js" type="module"></script>
+</body>
+</html>
