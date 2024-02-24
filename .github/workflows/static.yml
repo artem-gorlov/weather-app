@@ -29,10 +29,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: npm install
-        run: npm install
-      - name: Generate .env
-        run: npm run generate:env
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Pages
@@ -42,6 +38,11 @@ jobs:
         with:
           # Upload entire repository
           path: '.'
+
+      - name: npm install
+        run: npm install
+      - name: Generate .env
+        run: npm run generate:env
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
