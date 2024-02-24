@@ -36,28 +36,14 @@ jobs:
           # Upload entire repository
           path: '.'
 
-      - name: Create and populate .Renviron file
-        env:
-            WEATHER_API_URL: ${{ secrets.WEATHER_API_URL }}
-            WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
-            IMAGE_API_URL: ${{ secrets.IMAGE_API_URL }}
-            IMAGE_ACCESS_KEY: ${{ secrets.IMAGE_ACCESS_KEY }}
-        run: |
-            touch env.js
-            echo WEATHER_API_URL="$WEATHER_API_URL" >> env.js
-            echo WEATHER_API_KEY="$WEATHER_API_KEY" >> env.js
-            echo IMAGE_API_URL="$IMAGE_API_URL" >> env.js
-            echo IMAGE_ACCESS_KEY="$IMAGE_ACCESS_KEY" >> env.js
-  
-            echo "cat env.js"
-            cat env.js
-  
-            echo "ls -a ."
-            ls -a .
-  
-            echo "ls -a ${{ github.workspace }}"
-            ls -a ${{ github.workspace }}
-        shell: bash
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+            node-version: latest
+      - name: npm install
+        run: npm install
+      - name: Generate .env
+        run: npm run generate:env
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
