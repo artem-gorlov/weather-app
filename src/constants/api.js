@@ -6,4 +6,4 @@ export const API_KEY = WEATHER_API_KEY
 export const CNT_COUNT = 5
 export const UNITS = "metric"
 
-export const DEFAULT_CITY = "Helsinki"
+export const DEFAULT_CITY = "Moskow"
