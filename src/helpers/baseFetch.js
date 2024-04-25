@@ -4,7 +4,9 @@ export const baseFetch = async (url, options) => {
     const json = await response.json()
 
     return json
-  } catch (error) {
-    throw new Error(error)
+  } catch (e) {
+    console.error(e)
   }
 }
+
+

@@ -1,6 +1,6 @@
-import { weatherApiService } from './weatherApiService.js'
+import { weatherApiService } from './apiService.js'
 import { DEFAULT_CITY } from './constants/api.js'
-import { WeatherWidgetService } from './weatherWidgetService.js'
+import { WeatherWidgetService } from './integrationService.js'
 import { Settings } from './constants/settings.js'
 
 const getWeatherByLocationButton = document.getElementById('get-weather-by-location-feature')
@@ -34,11 +34,22 @@ async function app() {
     processWeatherByLocation()
   } else {
     const weatherData = await weatherApiService.getWeatherByCity(DEFAULT_CITY)
-    console.log(weatherData)
 
     await WeatherWidgetService().process(weatherData)
   }
 
+  const input = document.getElementById('search')
+  let timeoutId
+
+  input.addEventListener('keydown', (e) => {
+    clearTimeout(timeoutId)
+    timeoutId = setTimeout(() => {
+      weatherApiService.getWeatherByCity(e.target.value)
+      .then(async data => {
+        await WeatherWidgetService().process(data)
+      })
+    }, 700)
+  })
 }
 
 app()

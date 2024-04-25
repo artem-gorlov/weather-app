@@ -3,15 +3,16 @@ import { formatTemperature } from './helpers/formatTemperature.js'
 import { SECOND } from './constants/time.js'
 import { imageApiService } from './imageApiService.js'
 
-export function WeatherWidgetService() {
+export function WeatherWidgetService() {  
   async function getBackgroundImage(keywords) {
     const imgResp = await imageApiService.fetchImageByKeywords(keywords)
-    const imgUrl = imgResp.results[0].urls.regular
+    console.log('imgResp', imgResp);
+    const imgUrl = imgResp.results[0]?.urls.regular
   
     return imgUrl
   }
 
-  function applyBackgroundImage(url) {
+  function integrateBackgroundImage(url) {
     const appBackgroundElement = document.getElementById('app-background')
   
     if(!appBackgroundElement) {
@@ -21,7 +22,7 @@ export function WeatherWidgetService() {
     appBackgroundElement.style.backgroundImage = `url(${url})`
   }
 
-  function applyTemperature(temperature) {
+  function integrateTemperature(temperature) {
     const temperatureElement = document.querySelector('#weather-widget > .temp > p')
   
     if(!temperatureElement) {
@@ -31,7 +32,7 @@ export function WeatherWidgetService() {
     temperatureElement.textContent = temperature
   }
 
-  function applyLocation(city) {
+  function integrateCity(city) {
     const locationElement = document.querySelector('#weather-widget > .meta > .location > p')
   
     if(!locationElement) {
@@ -45,7 +46,7 @@ export function WeatherWidgetService() {
     locationElement.textContent = city
   }
 
-  function applyDate(currentDate) {
+  function integrateDate(currentDate) {
     const dateElement = document.querySelector('#weather-widget > .meta > .date > p')
   
     if(!dateElement) {
@@ -61,16 +62,16 @@ export function WeatherWidgetService() {
     }
   
     const time = currentDate.toLocaleTimeString({}, {hour: '2-digit', minute: '2-digit'})
-    const day = currentDate.toLocaleDateString('en-US', { weekday: 'long' })
+    const day = currentDate.toLocaleDateString('en-EN', { weekday: 'long' })
     const date = currentDate.getDate()
-    const month = currentDate.toLocaleDateString('en-US', { month: "short" })
+    const month = currentDate.toLocaleDateString('en-EN', { month: "short" })
     const year = currentDate.getFullYear()
   
   
     dateElement.textContent = `${time} - ${day}, ${date} ${month} ${year}`
   }
 
-  function applyIcon(iconCode) {
+  function integrateIcon(iconCode) {
     const iconElement = document.querySelector('#weather-widget > .icon > i')
   
     if(!iconElement) {
@@ -87,18 +88,18 @@ export function WeatherWidgetService() {
   }
 
   async function process(weatherData) {
-    const imgUrl = await getBackgroundImage(`${weatherData.name} nature`)
+    const imgUrl = await getBackgroundImage(`${weatherData.name}`)
 
-    applyBackgroundImage(imgUrl)
+    integrateBackgroundImage(imgUrl)
 
-    applyTemperature(formatTemperature(weatherData.main.temp))
-    applyLocation(weatherData.name)
+    integrateTemperature(formatTemperature(weatherData.main?.temp))
+    integrateCity(weatherData.name)
 
     setInterval(() => { 
-      applyDate(new Date())
+      integrateDate(new Date())
      }, SECOND)
 
-    applyIcon(weatherData.weather[0].icon)
+    integrateIcon(weatherData.weather[0].icon)
   }
 
   return {
