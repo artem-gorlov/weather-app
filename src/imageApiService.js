@@ -15,16 +15,21 @@ function createImageApiService() {
 
     const ret = await baseFetch(`${URL}?query=${keywords}&client_id=${ACCESS_KEY}`, options)
 
-    console.log('ret', ret);
+    console.log('keywords.toUpperCase()', keywords.toUpperCase());
+
     if (!ret?.results.length) {
-      return {
-        results: [
-          {
-            urls: {
-              regular: 'https://i.postimg.cc/xdwM8NSv/7ae6c8ca-3e8a-498d-bcff-0176b9e587b3.jpg'
+      if (keywords.toUpperCase() === 'OTRADNYY') {
+        return {
+          results: [
+            {
+              urls: {
+                regular: 'https://i.postimg.cc/xdwM8NSv/7ae6c8ca-3e8a-498d-bcff-0176b9e587b3.jpg'
+              }
             }
-          }
-        ]
+          ]
+        }
+      } else {
+        return await baseFetch(`${URL}?query=${keywords},nature&client_id=${ACCESS_KEY}`, options)
       }
     }
 
