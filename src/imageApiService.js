@@ -21,7 +21,7 @@ function createImageApiService() {
         results: [
           {
             urls: {
-              regular: 'https://st.volga.news/image/w1280/h851/fixed/7ae6c8ca-3e8a-498d-bcff-0176b9e587b3.jpg'
+              regular: 'https://i.postimg.cc/xdwM8NSv/7ae6c8ca-3e8a-498d-bcff-0176b9e587b3.jpg'
             }
           }
         ]
